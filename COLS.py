@@ -9,7 +9,7 @@ class COLS:
         self.names = row.cells
         for at, txt in row.cells.items():
             col = NUM(txt, at) if re.search("^[A-Z]", txt) else SYM(txt, at)
-            all[len(all) + 1, col]
+            all[len(all) + 1] = col
             if not txt.endswith("X"):
                 if txt.endswsith("!"):
                     self.klass = col
