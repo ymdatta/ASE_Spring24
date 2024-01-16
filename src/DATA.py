@@ -29,15 +29,14 @@ class DATA:
         u = [col.small() for col in (self.cols.all)]
         return Row(u)
 
-    def stats(self, cols, callback, ndivs, u):
-        ## skipping as per comments in hw2.md
-        pass
-        # u = {".N": len(self.rows)}
-        # for col in getattr(self.cols, cols or "y"):
-        #     u[col.txt] =
+    def stats(self, cols=None, callback=None, ndivs=None, u=None):
+        u = {".N": len(self.rows)}
+        for col in (cols or self.cols["y"]):
+            u[col.txt] = round(type(col).__getattribute__(col, callback or "mid")(), ndivs)
+        return u
 
     def clone(self, rows=None, new=None):
-        new = Data([self.cols.names])
+        new = DATA([self.cols.names])
         for row in (rows or []):
             new.add(row)
         return new
