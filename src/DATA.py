@@ -44,7 +44,7 @@ class DATA:
 
     def stats(self, cols=None, callback=None, ndivs=None, u=None):
         u = {".N": len(self.rows)}
-        for col in (cols or self.cols["y"]):
+        for _, col in (cols or self.cols.y).items():
             u[col.txt] = round(type(col).__getattribute__(col, callback or "mid")(), ndivs)
         return u
 
