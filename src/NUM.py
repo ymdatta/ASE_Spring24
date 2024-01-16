@@ -38,7 +38,7 @@ class NUM:
         ## TODO: Need for integration to get cohen from CLI
         self.cohen      = 0.35
 
-    def add(self, x, d):
+    def add(self, x, d=0):
         if x != "?":
             self.n      += 1
             d           = x - self.mu
