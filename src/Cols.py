@@ -1,6 +1,6 @@
-import num
+import NUM
 import re
-import sym
+import SYM
 class COLS:
     def __init__(self, row):
         self.x = {}
@@ -8,7 +8,7 @@ class COLS:
         self.all = {}
         self.names = row.cells
         for at, txt in row.cells.items():
-            col = num(txt, at) if re.search("^[A-Z]", txt) else sym(txt, at)
+            col = NUM(txt, at) if re.search("^[A-Z]", txt) else SYM(txt, at)
             all[len(all) + 1] = col
             if not txt.endswith("X"):
                 if txt.endswsith("!"):
@@ -17,7 +17,7 @@ class COLS:
                     self.y[at] = col
                 else:
                     self.x[at] = col
-    
+
     def add(self,row):
         d = {}
         d[1] = self.x
