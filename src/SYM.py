@@ -24,7 +24,7 @@ SOFTWARE.
 
 import math 
 
-class Sym:
+class SYM:
     def __init__(self, s="", n=0):
         self.txt        = s
         self.at         = n

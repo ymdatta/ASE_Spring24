@@ -24,7 +24,7 @@ SOFTWARE.
 
 import re
 
-class Num:
+class NUM:
     def __init__(self, s="", n=0):
         self.txt        = s
         self.at         = n

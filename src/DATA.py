@@ -1,10 +1,10 @@
 import Cols
 import Row
 
-class Data:
+class DATA:
     def  __init__(self, src= [], callback=None):
-        rows = {}
-        cols =  None
+        self.rows = {}
+        self.cols =  None
         for x in src:
             self.add(x, callback)
 
