@@ -4,17 +4,6 @@ import pdb
 import re, ast, fileinput
 
 class DATA:
-    def coerce(self, x):
-        try : return ast.literal_eval(x)
-        except Exception: return x.strip()
-
-    # Split data file into multiple rows.
-    def csv(self, file="-"):
-        with  fileinput.FileInput(None if file=="-" else file) as src:
-            for line in src:
-                line = re.sub(r'([\n\t\r"\' ]|#.*)', '', line)
-                if line: yield [self.coerce(x) for x in line.split(",")]
-
     def  __init__(self, src= [], callback=None):
         self.rows = {}
         self.cols =  None
@@ -53,3 +42,14 @@ class DATA:
         for row in (rows or []):
             new.add(row)
         return new
+
+    def coerce(self, x):
+        try : return ast.literal_eval(x)
+        except Exception: return x.strip()
+
+    # Split data file into multiple rows.
+    def csv(self, file="-"):
+        with  fileinput.FileInput(None if file=="-" else file) as src:
+            for line in src:
+                line = re.sub(r'([\n\t\r"\' ]|#.*)', '', line)
+                if line: yield [self.coerce(x) for x in line.split(",")]
