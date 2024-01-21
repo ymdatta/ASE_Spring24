@@ -40,18 +40,18 @@ def o(x):
 
 def bayes():
     wme = {
-        'acc' = 0,
-        'datas' = {},
-        'tries' = 0,
-        'n' = 0
+        'acc' : 0,
+        'datas' : {},
+        'tries' : 0,
+        'n' : 0
     }
     d = DATA('../data/diabetes.csv', lambda data, t: learn(data, t, wme))
     print(wme["acc"] / wme["tries"])
     return wme["acc"] / wme["tries"] > 0.72
 
-def learn(data, row, my, kl):
+def learn(data, row, my):
     my['n'] = my['n'] + 1
-    kl = row['cells'][data.cols.klass.at]
+    kl = row.cells[data.cols.klass.at]
     if my['n'] > 10:
         my['tries'] = my['tries'] + 1
         my['acc'] = my['acc'] + (1 if kl == row.likes(my['datas']) else 0)
