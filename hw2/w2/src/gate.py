@@ -26,6 +26,7 @@ regular expressions,and exception handling,
 """
 import re, ast
 from DATA import DATA
+from ROW import ROW
 
 def coerce(x):
    try : return ast.literal_eval(x)
@@ -36,6 +37,27 @@ def oo(x) : print(o(x)); return x
 def o(x):
   return x.__class__.__name__ +"{"+ (" ".join([f":{k} {v}" for k,v in sorted(x.items())
                                                            if k[0]!="_"]))+"}"
+
+def bayes():
+    wme = {
+        'acc' = 0,
+        'datas' = {},
+        'tries' = 0,
+        'n' = 0
+    }
+    d = DATA('../data/diabetes.csv', lambda data, t: learn(data, t, wme))
+    print(wme["acc"] / wme["tries"])
+    return wme["acc"] / wme["tries"] > 0.72
+
+def learn(data, row, my, kl):
+    my['n'] = my['n'] + 1
+    kl = row['cells'][data.cols.klass.at]
+    if my['n'] > 10:
+        my['tries'] = my['tries'] + 1
+        my['acc'] = my['acc'] + (1 if kl == row.likes(my['datas']) else 0)
+    my['datas'][kl] = my['datas'].get(kl, DATA(data.cols.names))
+    my['datas'][kl].add(row)
+
 
 # In this code, global settings are kept in `the` (which is parsed from `__doc__`).
 # This variable is a `slots`, which is a neat way to represent dictionaries that
