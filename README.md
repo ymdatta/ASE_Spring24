@@ -10,7 +10,7 @@ Group 18 ASE Spring 24
 -  [Task1 Soybean Data Results](https://github.com/ymdatta/ASE_Spring24/blob/main/hw3/w3/task1/soybean_count.csv)
 
 ### Task 2 & 3 Results
-[Task4 Output File](https://github.com/ymdatta/ASE_Spring24/blob/main/hw3/w3/task4/w3_task2_task3.out)
+[Task 2 and 3 Output File](https://github.com/ymdatta/ASE_Spring24/blob/main/hw3/w3/task3/w3_task2_task3.out)
 
 ### Task 4 Results
 [Task4 Output File](https://github.com/ymdatta/ASE_Spring24/blob/main/hw3/w3/task4/w3_task4.out)
