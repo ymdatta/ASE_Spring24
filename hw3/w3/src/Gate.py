@@ -83,6 +83,7 @@ def bayes():
     }
     d = DATA(Constants.the.file, lambda data, t: learn(data, t, wme))
     print(wme["acc"] / wme["tries"] * 100)
+    print(wme["acc"] / wme["tries"] > 0.72)
     return wme["acc"] / wme["tries"] > 0.72
 
 def learn(data, row, my):
