@@ -27,6 +27,7 @@ regular expressions,and exception handling,
 import re, ast
 from DATA import DATA
 from ROW import ROW
+import pdb
 
 def coerce(x):
    try : return ast.literal_eval(x)
@@ -40,13 +41,14 @@ def o(x):
 
 def bayes():
     wme = {
-        'acc' : 0,
+        'acc' : 0.0,
         'datas' : {},
         'tries' : 0,
         'n' : 0
     }
     d = DATA('../data/diabetes.csv', lambda data, t: learn(data, t, wme))
     print(wme["acc"] / wme["tries"])
+    print((wme["acc"] / wme["tries"]) > 0.72)
     return wme["acc"] / wme["tries"] > 0.72
 
 def learn(data, row, my):
@@ -54,10 +56,12 @@ def learn(data, row, my):
     kl = row.cells[data.cols.klass.at]
     if my['n'] > 10:
         my['tries'] = my['tries'] + 1
-        my['acc'] = my['acc'] + (1 if kl == row.likes(my['datas']) else 0)
-    my['datas'][kl] = my['datas'].get(kl, DATA(data.cols.names))
-    my['datas'][kl].add(row)
+        my['acc'] = my['acc'] + (1 if kl  == row.likes(my['datas'])[0] else 0)
 
+    if kl not in my['datas']: 
+      my['datas'][kl] = DATA(data.cols.names)
+
+    my['datas'][kl].add(row.cells)
 
 # In this code, global settings are kept in `the` (which is parsed from `__doc__`).
 # This variable is a `slots`, which is a neat way to represent dictionaries that
@@ -69,3 +73,6 @@ the = SLOTS(**{m[1]:coerce(m[2]) for m in re.finditer( r"--(\w+)[^=]*=\s*(\S+)",
 
 d = DATA(the.file)
 print(d.stats(ndivs=2))
+
+
+bayes()

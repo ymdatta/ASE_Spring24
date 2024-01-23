@@ -23,6 +23,7 @@ SOFTWARE.
 """
 
 import re
+import pdb
 
 class NUM:
     def __init__(self, s="", n=0):
@@ -61,8 +62,8 @@ class NUM:
             from Cohen, J. 1998. Statistical Power Analysis for the Behavioral Sciences. 2nd ed. 
             Hillsdale, NJ: Lawrence Erlbaum Associates.
         """ 
-        pooledSd        = pow((pow(self.div(), 2) + pow(other.div(), 2)) / 2, 0.5)
         n12             = self.n + other.n
+        pooledSd        = pow((((self.n - 1) * (pow(self.div(), 2))) + ((other.n - 1) * (pow(other.div(), 2)))) / (n12 - 2), 0.5)
         """
             correction from Hedges, Larry, and Ingram Olkin. 1985. 
             “Statistical Methods in Meta-Analysis.” Stat Med. Vol. 20.
@@ -74,7 +75,7 @@ class NUM:
     def norm(self, x):
         return x if x == "?" else ((x - self.lo) / (self.hi - self.lo + 1E-30))
 
-    def like(self, x, _, nom, denom):
+    def like(self, x, _, nom=None, denom=None):
         mu              = self.mid()
         sd              = self.div() + 1E-30
         nom             = pow(2.718, ((-0.5) * pow(x - mu, 2) / (pow(sd, 2))))

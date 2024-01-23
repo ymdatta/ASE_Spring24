@@ -4,14 +4,24 @@ import pdb
 import re, ast, fileinput
 
 class DATA:
+    def _ltod(self, a):
+        d = {}
+        for i in a:
+            d[1 + len(d)] = i
+
+        return d
+
     def  __init__(self, src= [], callback=None):
         self.rows = {}
         self.cols =  None
-        for x in self.csv(src):
-            self.add(x, callback)
+        if type(src) == str:
+            for x in self.csv(src):
+                self.add(self._ltod(x), callback)
+        else:
+            self.add(src, callback)
 
-    def add(self, t, callback, row=None):
-        row = t.get("cells", t) if isinstance(t, dict) else ROW(t)
+    def add(self, t, callback=None, row=None):
+        row = ROW(t)
         if self.cols:
             if callback:
                 callback(self, row)

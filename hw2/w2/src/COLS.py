@@ -24,6 +24,6 @@ class COLS:
         d[1] = self.x
         d[2] = self.y
         for _,cols in d.items():
-            for at,col in cols.items():
-                col.add(row.cells[at])
+            for _,col in cols.items():
+                col.add(row.cells[col.at])
         return row
