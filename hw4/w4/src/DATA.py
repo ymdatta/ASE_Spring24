@@ -53,8 +53,34 @@ class DATA:
             new.add(row)
         return new
 
-    # Usage:
-    # best, rest = data.bestRest(rows, want)
+    def gate(self,budget0,budget,some):
+        stats = {}
+        bests = {}
+        rows = random.shuffle(self.rows)
+        lite = rows[0:budget0 + 1]
+        dark = rows[budget0 + 1:]
+        for i in range(0,budget):
+            best, rest = bestRest(lite, len(list) ** some)
+            todo, selected = split(best, rest, lite, dark)
+            stats[i] = selected.mid()
+            bests[i] = best.rows[1]
+            lite[todo] = dark.pop(todo)
+        return stats,bests
+
+    def split(self,best,rest,lite,dark):
+        selected = DATA(self.cols.names)
+        max = 1E30
+        out = 0
+        for i,row in dark.items():
+            b = row.like(best,len(lite),2)
+            r = row.like(rest,len(lite),2)
+            if b > r :
+                selected.add(row)
+            temp = abs(b+r) / abs(b-r+1E-300)
+            if temp > max:
+                out,max = i,temp
+        return out,selected
+
     def bestRest(self, rows, want):
         # Sort rows based on distance to heaven
         rows.sort(key=lambda row: row.d2h(self))
