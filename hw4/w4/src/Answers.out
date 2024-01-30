@@ -1,5 +1,5 @@
 1. Does SMO do better than the random baselines (see prints 1,2,4)?
-Ans. SMO is more efficient than random baselines as it takes fewer evaluations to find the optimal solution and considers the entire parameter space to make its evaluations.
+Ans. SMO is more efficient than random baselines as it takes fewer evaluations to find the optimal solution and considers the entire parameter space to make its evaluations. 
 
 2. How many y row evaluations are required for print 3?
 Ans. 1 evaluation because we are simply selecting the row with the best d2h value.
