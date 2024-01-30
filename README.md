@@ -14,3 +14,16 @@ Group 18 ASE Spring 24
 
 ### Task 4 Results
 [Task4 Output File](https://github.com/ymdatta/ASE_Spring24/blob/main/hw3/w3/task4/w3_task4.out)
+
+## HW Week 4
+
+### Answers to questions
+[Answers](https://github.com/ymdatta/ASE_Spring24/blob/main/hw4/w4/src/Answers.out)
+
+### Print output files
+ - [Print 1](https://github.com/ymdatta/ASE_Spring24/blob/main/hw4/w4/src/1.out)
+ - [Print 2](https://github.com/ymdatta/ASE_Spring24/blob/main/hw4/w4/src/2.out)
+ - [Print 3](https://github.com/ymdatta/ASE_Spring24/blob/main/hw4/w4/src/3.out)
+ - [Print 4](https://github.com/ymdatta/ASE_Spring24/blob/main/hw4/w4/src/4.out)
+ - [Print 5](https://github.com/ymdatta/ASE_Spring24/blob/main/hw4/w4/src/5.out)
+ - [Print 6](https://github.com/ymdatta/ASE_Spring24/blob/main/hw4/w4/src/6.out)
