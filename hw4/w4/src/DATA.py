@@ -1,7 +1,7 @@
 from COLS import COLS
 from ROW import ROW
 import pdb
-import re, ast, fileinput, random
+import re, ast, fileinput, random, copy
 
 class DATA:
     def _ltod(self, a):
@@ -62,16 +62,102 @@ class DATA:
             new.add(row)
         return new
 
+    def _get_y(self):
+        y_list = []
+        for at, txt in self.cols.names.items():
+            if (txt.endswith("+") or txt.endswith("-")):
+                y_list.append(at)
+
+        return y_list
+
+    def _print_4(self, rows, y_ind, budget0=None, i=None):
+        if budget0:
+            len1 = budget0 + i + 1
+        else:
+            len1 = len(rows)
+
+        random.shuffle(rows)
+        dl = {}
+        count = 0
+        for i in y_ind:
+            dl[i] = 0
+
+        for ind in range(0, len1):
+            count += 1
+            for j in y_ind:
+                dl[j] += rows[ind].cells[j]
+
+        l = list(dl.values())
+        nl = [x / count for x in l]
+
+        s = ""
+        for i in nl:
+            s += str(i)
+            s += "   "
+
+        print(s)
+
+        return nl
+
     def gate(self,budget0,budget,some):
         stats = {}
         bests = {}
         rows = list(self.rows.values())
         random.shuffle(rows)
+
+        print("1. y values of first 6 examples in ROWS")
+        y_ind = self._get_y()
+
+        for i in range(0, 7):
+            s = ""
+            for j in y_ind:
+                s += str(rows[i].cells[j])
+                s += "   "
+
+            print(s)
+
+        print("2. y values of first 50 examples in ROWS")
+        for i in range(0, 51):
+            s = ""
+            for j in y_ind:
+                s += str(rows[i].cells[j])
+                s += "   "
+
+            print(s)
+
+        print("3. sort rows based on distance to heaven")
+        rows_temp = copy.deepcopy(rows)
+        rows_temp.sort(key=lambda row: row.d2h(self))
+        rows_temp.reverse()
+
+        s_temp = ""
+        for j in y_ind:
+            s_temp += str(rows[0].cells[j])
+            s_temp += "   "
+
+        print(s_temp)
+        print()
+
         lite = rows[0: budget0 + 1]
         dark = rows[budget0 + 1:]
         for i in range(0,budget):
             best, rest = self.bestRest(lite, len(lite) ** some)
             todo, selected = self.split(best, rest, lite, dark)
+
+            print("4. rand: y values of centroid of (from DARK, select BUDGET0+i rows at random)")
+            self._print_4(dark, y_ind, budget0, i)
+
+            print("5. mid, y values of centroid of SELECTED")
+            self._print_4(list(selected.rows.values()), y_ind)
+
+            print("6. y values of first row in BEST")
+            s_temp = ""
+            for j in y_ind:
+                s_temp += str(list(best.rows.values())[0].cells[j])
+                s_temp += "   "
+
+            print(s_temp)
+
             stats[i] = selected.mid()
             bests[i] = best.rows[1]
             lite[todo] = dark.pop(todo)
