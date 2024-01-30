@@ -2,7 +2,7 @@
 Ans. SMO is more efficient than random baselines as it takes fewer evaluations to find the optimal solution and considers the entire parameter space to make its evaluations. 
 
 2. How many y row evaluations are required for print 3?
-Ans. 1 evaluation because we are simply selecting the row with the best d2h value.
+Ans. We are evaluating every row and selecting the row with the best d2h value.
 
 3. How does SMO do compared to absolute best (print 3)?
 Ans. Absolute best is more efficient in terms of computing speed for this dataset. However, it will not produce the optimal solution after considering the entire parameter space, it simply outputs the global optimum (minimum/maximum).
