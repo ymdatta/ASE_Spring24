@@ -121,4 +121,8 @@ budget0 = 4
 budget = 10
 some = 0.5
 
-d.gate(budget0, budget, some)
+for i in range(20):
+    print(" ")
+    print("Iteration {} : ".format(i))
+    print(" ")
+    d.gate(budget0, budget, some)

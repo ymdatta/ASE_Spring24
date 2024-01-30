@@ -92,7 +92,7 @@ class DATA:
 
         s = ""
         for i in nl:
-            s += str(i)
+            s += "{:.2f}".format(i)
             s += "   "
 
         print(s)
