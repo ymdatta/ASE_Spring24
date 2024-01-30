@@ -1,5 +1,6 @@
 import unittest
 import sys
+import random
 sys.path.append("../src")
 from src.DATA import DATA
 
@@ -70,6 +71,40 @@ class DataTestSuite(unittest.TestCase):
         self.assertEqual(len(ltod_result), len(list_data))
         for i, value in enumerate(list_data):
             self.assertEqual(ltod_result[i + 1], value)
+
+    def test_shuffle(self):
+        data = DATA("../../data/auto93.csv")
+        rows = list(data.rows.values())
+        shuffled1 = rows.copy()
+        random.shuffle(shuffled1)
+        self.assertNotEqual(rows,shuffled1)
+        shuffled2 = rows.copy()
+        random.shuffle(shuffled2)
+        self.assertNotEqual(shuffled1,shuffled2)
+
+    def test_b_r(self):
+        data = DATA("../../data/auto93.csv")
+        rows = list(data.rows.values())
+        lite = rows[0:5]
+        dark = rows[5:]
+        some = len(lite)**0.5
+        self.assert(some < len(lite))
+        best,rest = data.bestRest(lite,some)
+        self.assertEqual(len(best),some)
+        self.assertEqual(len(rest),len(rows) - len(lite)**0.5)
+        for i,row in enumerate(dark):
+            b = row.like(best,len(lite),2)
+            r = row.like(rest,len(lite),2)
+            break
+        self.assertIsInstance(b,(int,float))
+        self.assertIsInstance(r,(int,float))
+        todo,selected = data.split(best,rest,lite,dark)
+        self.assert(len(todo) > 0)
+        self.assert(len(selected) > 0)
+
+
+    def test_split(self):
+
 
 if __name__ == '__main__':
     unittest.main()
