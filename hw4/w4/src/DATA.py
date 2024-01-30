@@ -1,7 +1,7 @@
 from COLS import COLS
 from ROW import ROW
 import pdb
-import re, ast, fileinput
+import re, ast, fileinput, random
 
 class DATA:
     def _ltod(self, a):
@@ -17,11 +17,18 @@ class DATA:
         if type(src) == str:
             for x in self.csv(src):
                 self.add(self._ltod(x), callback)
+        elif type(src) == list:
+            for x in src:
+                self.add(x, callback)
         else:
             self.add(src, callback)
 
     def add(self, t, callback=None, row=None):
-        row = ROW(t)
+        if (type(t) == ROW): 
+            row = t
+        else:
+            row = ROW(t)
+
         if self.cols:
             if callback:
                 callback(self, row)
@@ -30,7 +37,9 @@ class DATA:
             self.cols = COLS(row)
 
     def mid(self, cols=None, u=None):
-        u = [col.mid() for col in (cols or self.cols.all)]
+        u = [col.mid() for _, col in (cols or self.cols.all.items())]
+        if (type(u) == list):
+            u = self._ltod(u)
         return ROW(u)
 
     def div(self, cols=None, u=None):
@@ -56,22 +65,23 @@ class DATA:
     def gate(self,budget0,budget,some):
         stats = {}
         bests = {}
-        rows = random.shuffle(self.rows)
-        lite = rows[0:budget0 + 1]
+        rows = list(self.rows.values())
+        random.shuffle(rows)
+        lite = rows[0: budget0 + 1]
         dark = rows[budget0 + 1:]
         for i in range(0,budget):
-            best, rest = bestRest(lite, len(list) ** some)
-            todo, selected = split(best, rest, lite, dark)
+            best, rest = self.bestRest(lite, len(lite) ** some)
+            todo, selected = self.split(best, rest, lite, dark)
             stats[i] = selected.mid()
             bests[i] = best.rows[1]
             lite[todo] = dark.pop(todo)
         return stats,bests
 
     def split(self,best,rest,lite,dark):
-        selected = DATA(self.cols.names)
+        selected = DATA([self.cols.names])
         max = 1E30
         out = 0
-        for i,row in dark.items():
+        for i,row in enumerate(dark):
             b = row.like(best,len(lite),2)
             r = row.like(rest,len(lite),2)
             if b > r :
@@ -90,14 +100,14 @@ class DATA:
 
         # Split rows into best and rest based on the 'want' parameter
         for i, row in enumerate(rows):
-            if i < want:
+            if i <= want:
                 best.append(row)
             else:
                 rest.append(row)
 
         # Create new DATA objects for best and rest rows
-        best_data = DATA.new(best)
-        rest_data = DATA.new(rest)
+        best_data = DATA(best)
+        rest_data = DATA(rest)
 
         return best_data, rest_data
 

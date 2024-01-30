@@ -14,7 +14,7 @@ class ROW:
         self.k = Constants.the.k
 
     # Distance to best values (and _lower_ is _better_).
-    def d2h(self, data, d, n):
+    def d2h(self, data, d=None, n=None):
         d, n = 0, 0
         for k, col in data.cols.y.items():
             n += 1
@@ -45,5 +45,8 @@ class ROW:
             v   =   self.cells[col.at]
             if v != "?":
                 inc     =   col.like(v, prior)
+                if (inc == 0):
+                    # TODO: based on how lua handles this code.
+                    return 0
                 out     =   out + math.log(inc)
         return pow(math.exp(1), out)

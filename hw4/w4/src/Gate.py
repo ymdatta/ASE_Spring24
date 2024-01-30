@@ -8,7 +8,6 @@ OPTIONS:
   -B --Bootstraps number of bootstraps    = 512
   -c --cohen  parametric small delta      = .35
   -C --Cliffs  non-parametric small delta = 0.2385
-  -f --file   where to read data          = "../data/auto93.csv"
   -F --Far    distance to  distant rows   = .925
   -g --go     start up action             = "help"
   -h --help   show help                   = False
@@ -20,7 +19,7 @@ OPTIONS:
   -T --Top    max. good cuts to explore   = 10
   -k --k      max. good cuts to explore   = 10
   -c --cohen    small effect size               = .35
-  -f --file     csv data file name              = ../data/diabetes.csv
+  -f --file    where to read data          = ../data/auto93.csv
   -h --help     show help                       = false
   -k --k        low class frequency kludge      = 1
   -m --m        low attribute frequency kludge  = 2
@@ -106,6 +105,20 @@ class SLOTS(dict):
 
 Constants.the = SLOTS(**{m[1]:coerce(m[2]) for m in re.finditer( r"--(\w+)[^=]*=\s*(\S+)",__doc__)})
 
-setDocValue()
-UpdateCLAValues()
-bayes()
+#setDocValue()
+#UpdateCLAValues()
+#bayes()
+
+wme = {
+    'acc' : 0.0,
+    'datas' : {},
+    'tries' : 0,
+    'n' : 0
+}
+d = DATA(Constants.the.file)
+
+budget0 = 4
+budget = 10
+some = 0.5
+
+d.gate(budget0, budget, some)
