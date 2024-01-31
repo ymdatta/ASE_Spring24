@@ -36,6 +36,7 @@ from ROW import ROW
 import pdb
 import sys
 import Constants
+import random
 
 
 def coerce(x):
@@ -120,9 +121,9 @@ d = DATA(Constants.the.file)
 budget0 = 4
 budget = 10
 some = 0.5
-
+random_seeds = random.sample(range(100),20)
 for i in range(20):
-    print(" ")
-    print("Iteration {} : ".format(i))
-    print(" ")
+    print("\nIteration {0} : \n".format(i))
+    Constants.the.seed = random_seeds[i]
+    print("Current random seed:  {0}\n".format(Constants.the.seed))
     d.gate(budget0, budget, some)
