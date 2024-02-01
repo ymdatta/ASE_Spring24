@@ -18,7 +18,8 @@ Group 18 ASE Spring 24
 ## HW Week 4
 
 ### Answers to questions
-[Answers](https://github.com/ymdatta/ASE_Spring24/blob/main/hw4/w4/src/Answers.out)
+- [Answers](https://github.com/ymdatta/ASE_Spring24/blob/main/hw4/w4/src/Answers.out)
+- [Program Output With All Outputs Combined](https://github.com/ymdatta/ASE_Spring24/blob/main/hw4/w4/src/All_Answers.out)
 
 ### Print output files
  - [Print 1](https://github.com/ymdatta/ASE_Spring24/blob/main/hw4/w4/src/1.out)
