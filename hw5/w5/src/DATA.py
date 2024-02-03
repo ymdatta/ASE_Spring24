@@ -157,3 +157,14 @@ class DATA:
             for line in src:
                 line = re.sub(r'([\n\t\r"\' ]|#.*)', '', line)
                 if line: yield [self.coerce(x) for x in line.split(",")]
+
+    def farapart(self,rows,sortp=NONE,a=NONE,b=NONE,far=NONE,evals=NONE):
+        far = len(rows) * Constants.the.far
+        evals = 1 if a else 2
+        a = a if a else random.choice(rows).neighbors(self,rows)[far]
+        b = a.neighbors(self,rows)[far]
+        if sortp and b.d2h(self) < a.d2h(self):
+            a,b = b,a
+        return a,b,a.dist(b,self),evals
+
+    #def half(self,rows=NONE,sortp=NONE,before=NONE,evals=NONE):
