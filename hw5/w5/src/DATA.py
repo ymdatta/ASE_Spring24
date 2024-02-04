@@ -3,6 +3,7 @@ from ROW import ROW
 import pdb
 import re, ast, fileinput, random, copy
 import Constants
+import Utils
 
 class DATA:
     def _ltod(self, a):
@@ -147,6 +148,11 @@ class DATA:
 
         return best_data, rest_data
 
+    def many(t, n=None):
+        if n is None:
+            n = len(t)
+        return [random.choice(t) for _ in range(n)]
+
     def coerce(self, x):
         try : return ast.literal_eval(x)
         except Exception: return x.strip()
@@ -158,7 +164,7 @@ class DATA:
                 line = re.sub(r'([\n\t\r"\' ]|#.*)', '', line)
                 if line: yield [self.coerce(x) for x in line.split(",")]
 
-    def farapart(self,rows,sortp=NONE,a=NONE,b=NONE,far=NONE,evals=NONE):
+    def farapart(self,rows,sortp=None,a=None,b=None,far=None,evals=None):
         far = len(rows) * Constants.the.far
         evals = 1 if a else 2
         a = a if a else random.choice(rows).neighbors(self,rows)[far]
@@ -167,4 +173,44 @@ class DATA:
             a,b = b,a
         return a,b,a.dist(b,self),evals
 
-    #def half(self,rows=NONE,sortp=NONE,before=NONE,evals=NONE):
+    def half(self,rows=None,sortp=None,before=None,evals=None):
+        some = self.many(rows, min(Constants.the.half,len(rows)))
+        a,b,C,evals = self.farapart(some, sortp, before)
+        def d(row1,row2):
+            return row1.dist(row2,self)
+        def project(r):
+            return ((d(r,a)**2 + C**2 - d(r,b)**2) / (2*C))
+        a_s,b_s = {},{}
+        for n,row in enumerate(Utils.keysort(rows,project)):
+            if n <= len(rows) // 2:
+                a_s[n] = row
+            else:
+                b_s[n] = row
+        return a_s, b_s, a, b, C, d(a, b_s[1]), evals
+
+    def tree(self, sortp=None, _tree=None, evals=None, evals1=None):
+        evals = 0
+        def _tree(data, above, lefts, rights, node):
+            node = NODE(data)
+            if len(data.rows) > 2*(len(self.rows)**0.5):
+                lefts, rights, node.left, node.right, node.C, node.cut, evals1 = self.half(data.rows, sortp, above)
+                evals = evals + evals1
+                node.lefts  = _tree(self.clone(lefts),  node.left)
+                node.rights = _tree(self.clone(rights), node.right)
+            return node
+        return _tree(self),evals
+
+    def branch(self,stop=None,rest=None,_branch=None,evals=None):
+        evals, rest = 1, {}
+        if stop is None:
+            stop = 2*(len(self.rows)**0.5)
+        def _branch(data, above, left, lefts, rights):
+            if len(data.rows) > stop:
+                lefts, rights, left = self.half(data.rows, true, above)
+                evals = evals+1
+                for _,row1 in rights.items():
+                    rest[1+len(rest)] = row1
+                return _branch(data.clone(lefts), left)
+            else:
+                return self.clone(data.rows),self.clone(rest),evals
+        return _branch(self)
