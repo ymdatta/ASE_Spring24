@@ -63,10 +63,10 @@ class ROW:
 
     def dist(self, other, data, d=0, n=0, p=2):
         p=Constants.the.p
-        for _, col in data.cols.x:
+        for _, col in data.cols.x.items():
             n += 1
-            d += self.cells[col.at].dist(other.cells[col.at])**p
+            d += pow(col.dist(self.cells[col.at], other.cells[col.at]), p)
         return (d/n)**(1/p)
 
-    def neighbors(self, data, rows):
-        return Utils.keysort(rows or data.rows, lambda row: self.dist(row, data))
+    def neighbors(self, data, rows=None):
+        return Utils.keysort(rows or list(data.rows.values()), lambda row: self.dist(row, data))

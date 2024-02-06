@@ -1,7 +1,6 @@
 import pdb
 import Constants
 import Utils
-from DATA import DATA
 
 class NODE:
     def __init__(self,data):

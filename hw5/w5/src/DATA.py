@@ -1,5 +1,6 @@
 from COLS import COLS
 from ROW import ROW
+from NODE import NODE
 import pdb
 import re, ast, fileinput, random, copy
 import Constants

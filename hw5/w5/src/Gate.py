@@ -19,7 +19,7 @@ OPTIONS:
   -T --Top    max. good cuts to explore   = 10
   -k --k      max. good cuts to explore   = 10
   -c --cohen    small effect size               = .35
-  -f --file    where to read data          = /Users/jayvishaalj/MS/sem2/ase/Assignment/ASE_Spring24/hw5/w5/data/auto93.csv
+  -f --file    where to read data          = ./../data/auto93.csv
   -h --help     show help                       = false
   -k --k        low class frequency kludge      = 1
   -m --m        low attribute frequency kludge  = 2
@@ -116,6 +116,22 @@ wme = {
     'tries' : 0,
     'n' : 0
 }
-d = DATA(Constants.the.file)
 
-print("Week 5 Sort based on First of Rows as Heaven")
+def _get_string(d):
+    s = "{"
+    for i in d.values():
+        s += " " + str(i)
+    s += "}" 
+
+    return s
+
+d = DATA(Constants.the.file)
+r1 = d.rows[1]
+rows = r1.neighbors(d)
+count = 0
+for row in rows:
+    if (count % 30 == 0):
+        print(count + 1, _get_string(row.cells), round(row.dist(r1, d), 2))
+    count += 1
+
+#print("Week 5 Sort based on First of Rows as Heaven")
