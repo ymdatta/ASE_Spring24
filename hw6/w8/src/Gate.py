@@ -162,5 +162,9 @@ def print_smo(d):
 
 d = DATA(Constants.the.file)
 print_stats(d)
-print_50(d)
+print("#")
 print_smo(d)
+print("#")
+print_50(d)
+print("#")
+d.evaluate_all()

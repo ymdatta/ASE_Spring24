@@ -165,6 +165,17 @@ class DATA:
 
         return stats,bests
 
+    def evaluate_all(self):
+        rows = list(self.rows.values())
+        x_ind = self._get_x()
+        rows_temp = copy.deepcopy(rows)
+        rows_temp.sort(key=lambda row: row.d2h(self))
+        s_temp = ""
+        for j in x_ind:
+            s_temp += str(rows_temp[0].cells[j])
+            s_temp += "\t"
+        print("100%:\t",s_temp)
+
     def split(self,best,rest,lite,dark):
         selected = DATA([self.cols.names])
         max = 1E30
