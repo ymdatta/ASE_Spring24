@@ -125,10 +125,36 @@ def _get_string(d):
 
     return s
 
-#def print_stats(d):
+def print_stats(d):
+    mid = d.stats(ndivs=2)
+    div = d.stats_divs(ndivs=2)
+    m = ""
+    for x in mid:
+        m += str(x)
+        m += "\t"
+    print("mid:\t",m)
 
+    di = ""
+    for x in div:
+        di += str(x)
+        di += "\t"
+    print("div:\t",di)
+
+def print_50(d):
+    rows = list(d.rows.values())
+    random.seed(Constants.the.seed)
+    random.shuffle(rows)
+    x_ind = d._get_x()
+    y_ind = d._get_y()
+
+    for i in range(0, 50):
+        s = ""
+        for j in x_ind:
+            s += str(rows[i].cells[j])
+            s += "\t"
+
+        print("any50:\t",s)
 
 d = DATA(Constants.the.file)
-
-print("mid: ",d.stats(ndivs=2))
-print("div: ",d.stats_divs(ndivs=2))
+print_stats(d)
+print_50(d)

@@ -54,20 +54,20 @@ class DATA:
         return ROW(u)
 
     def stats(self, cols=None, callback=None, ndivs=None, u=None):
-        u = {".N": len(self.rows)}
+        u = {}
         for _, col in (cols or self.cols.x).items():
             u[col.txt] = round(type(col).__getattribute__(col, callback or "mid")(), ndivs)
         for _, col in (cols or self.cols.y).items():
             u[col.txt] = round(type(col).__getattribute__(col, callback or "mid")(), ndivs)
-        return u
+        return list(u.values())
 
     def stats_divs(self, cols=None, callback=None, ndivs=None, u=None):
-        u = {".N": len(self.rows)}
+        u = {}
         for _, col in (cols or self.cols.x).items():
             u[col.txt] = round(type(col).__getattribute__(col, callback or "div")(), ndivs)
         for _, col in (cols or self.cols.y).items():
             u[col.txt] = round(type(col).__getattribute__(col, callback or "div")(), ndivs)
-        return u
+        return list(u.values())
 
     def clone(self, rows=None, new=None):
         new = DATA([self.cols.names])
@@ -82,6 +82,14 @@ class DATA:
                 y_list.append(at)
 
         return y_list
+
+    def _get_x(self):
+        x_list = []
+        for at, txt in self.cols.names.items():
+            if (not txt.endswith("+") or not txt.endswith("-")):
+                x_list.append(at)
+
+        return x_list
 
     def _print_4(self, rows, y_ind, budget0=None, i=None):
         if budget0:
