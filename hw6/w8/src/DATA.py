@@ -133,6 +133,38 @@ class DATA:
         print(rows[30].cells)
         return rows
 
+    def gate_smo(self,budget0,budget,some):
+        stats = {}
+        bests = {}
+        rows = list(self.rows.values())
+        random_seeds = random.sample(range(100),20)
+        for i in range(5):
+            Constants.the.seed = random_seeds[i]
+            random.shuffle(rows)
+
+            lite = rows[0: budget0]
+            dark = rows[budget0:]
+            result6 = []
+            x_ind = self._get_x()
+            for i in range(budget):
+                best, rest = self.bestRest(lite, len(lite) ** some)
+                todo, selected, max = self.split(best, rest, lite, dark)
+
+                stats[i] = selected.mid()
+                bests[i] = best.rows[1]
+                lite[todo] = dark.pop(todo)
+
+                s_temp = ""
+                for j in x_ind:
+                    s_temp += str(list(best.rows.values())[0].cells[j])
+                    s_temp += "\t"
+
+                result6.append(s_temp)
+
+            print("\n smo9:\t".join(result6))
+
+        return stats,bests
+
     def split(self,best,rest,lite,dark):
         selected = DATA([self.cols.names])
         max = 1E30

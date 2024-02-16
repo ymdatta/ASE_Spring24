@@ -108,7 +108,6 @@ Constants.the = SLOTS(**{m[1]:coerce(m[2]) for m in re.finditer( r"--(\w+)[^=]*=
 
 #setDocValue()
 #UpdateCLAValues()
-#bayes()
 
 wme = {
     'acc' : 0.0,
@@ -155,6 +154,13 @@ def print_50(d):
 
         print("any50:\t",s)
 
+def print_smo(d):
+    budget0 = 4
+    budget = 5
+    some = 0.5
+    d.gate_smo(budget0,budget,some)
+
 d = DATA(Constants.the.file)
 print_stats(d)
 print_50(d)
+print_smo(d)
