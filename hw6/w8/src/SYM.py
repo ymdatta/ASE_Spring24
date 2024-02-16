@@ -49,7 +49,7 @@ class SYM:
     def mid(self):
         return self.mode
 
-    def div(self, e):
+    def div(self, e=None):
         e = 0
         for _, v in self.has.items():
             # *, / -> right to left

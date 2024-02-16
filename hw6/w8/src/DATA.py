@@ -55,8 +55,18 @@ class DATA:
 
     def stats(self, cols=None, callback=None, ndivs=None, u=None):
         u = {".N": len(self.rows)}
+        for _, col in (cols or self.cols.x).items():
+            u[col.txt] = round(type(col).__getattribute__(col, callback or "mid")(), ndivs)
         for _, col in (cols or self.cols.y).items():
             u[col.txt] = round(type(col).__getattribute__(col, callback or "mid")(), ndivs)
+        return u
+
+    def stats_divs(self, cols=None, callback=None, ndivs=None, u=None):
+        u = {".N": len(self.rows)}
+        for _, col in (cols or self.cols.x).items():
+            u[col.txt] = round(type(col).__getattribute__(col, callback or "div")(), ndivs)
+        for _, col in (cols or self.cols.y).items():
+            u[col.txt] = round(type(col).__getattribute__(col, callback or "div")(), ndivs)
         return u
 
     def clone(self, rows=None, new=None):

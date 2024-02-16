@@ -125,13 +125,10 @@ def _get_string(d):
 
     return s
 
-d = DATA(Constants.the.file)
-r1 = d.rows[1]
-rows = r1.neighbors(d)
-count = 0
-for row in rows:
-    if (count % 30 == 0):
-        print(count + 1, _get_string(row.cells), round(row.dist(r1, d), 2))
-    count += 1
+#def print_stats(d):
 
-#print("Week 5 Sort based on First of Rows as Heaven")
+
+d = DATA(Constants.the.file)
+
+print("mid: ",d.stats(ndivs=2))
+print("div: ",d.stats_divs(ndivs=2))
