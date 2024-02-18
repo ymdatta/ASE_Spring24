@@ -33,3 +33,12 @@ Group 18 ASE Spring 24
 
  ### Distance output
  - [Distance output](https://github.com/ymdatta/ASE_Spring24/blob/main/hw5/w5/src/dist.out)
+
+## HW Week 6
+
+ ### Task 1 Output
+ - [Cluster output](https://github.com/ymdatta/ASE_Spring24/blob/main/hw6/w7/src/task1.out)
+### Task 2 Output
+ - [Optimization Single descent output](https://github.com/ymdatta/ASE_Spring24/blob/main/hw6/w7/src/task2.out)
+ ### Task 3 Output
+ - [Optimization Double tap output](https://github.com/ymdatta/ASE_Spring24/blob/main/hw6/w7/src/task3.out)
