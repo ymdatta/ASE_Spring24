@@ -54,20 +54,10 @@ class DATA:
         return ROW(u)
 
     def stats(self, cols=None, callback=None, ndivs=None, u=None):
-        u = {}
-        for _, col in (cols or self.cols.x).items():
-            u[col.txt] = round(type(col).__getattribute__(col, callback or "mid")(), ndivs)
+        u = {".N": len(self.rows)}
         for _, col in (cols or self.cols.y).items():
             u[col.txt] = round(type(col).__getattribute__(col, callback or "mid")(), ndivs)
-        return list(u.values())
-
-    def stats_divs(self, cols=None, callback=None, ndivs=None, u=None):
-        u = {}
-        for _, col in (cols or self.cols.x).items():
-            u[col.txt] = round(type(col).__getattribute__(col, callback or "div")(), ndivs)
-        for _, col in (cols or self.cols.y).items():
-            u[col.txt] = round(type(col).__getattribute__(col, callback or "div")(), ndivs)
-        return list(u.values())
+        return u
 
     def clone(self, rows=None, new=None):
         new = DATA([self.cols.names])
@@ -82,14 +72,6 @@ class DATA:
                 y_list.append(at)
 
         return y_list
-
-    def _get_x(self):
-        x_list = []
-        for at, txt in self.cols.names.items():
-            if (not txt.endswith("+") or not txt.endswith("-")):
-                x_list.append(at)
-
-        return x_list
 
     def _print_4(self, rows, y_ind, budget0=None, i=None):
         if budget0:
@@ -133,49 +115,6 @@ class DATA:
         print(rows[30].cells)
         return rows
 
-    def gate_smo(self,budget0,budget,some):
-        stats = {}
-        bests = {}
-        rows = list(self.rows.values())
-        random_seeds = random.sample(range(100),20)
-        for i in range(5):
-            Constants.the.seed = random_seeds[i]
-            random.shuffle(rows)
-
-            lite = rows[0: budget0]
-            dark = rows[budget0:]
-            result6 = []
-            x_ind = self._get_x()
-            for i in range(budget):
-                best, rest = self.bestRest(lite, len(lite) ** some)
-                todo, selected, max = self.split(best, rest, lite, dark)
-
-                stats[i] = selected.mid()
-                bests[i] = best.rows[1]
-                lite[todo] = dark.pop(todo)
-
-                s_temp = ""
-                for j in x_ind:
-                    s_temp += str(list(best.rows.values())[0].cells[j])
-                    s_temp += "\t"
-
-                result6.append(s_temp)
-
-            print("\n smo9:\t".join(result6))
-
-        return stats,bests
-
-    def evaluate_all(self):
-        rows = list(self.rows.values())
-        x_ind = self._get_x()
-        rows_temp = copy.deepcopy(rows)
-        rows_temp.sort(key=lambda row: row.d2h(self))
-        s_temp = ""
-        for j in x_ind:
-            s_temp += str(rows_temp[0].cells[j])
-            s_temp += "\t"
-        print("100%:\t",s_temp)
-
     def split(self,best,rest,lite,dark):
         selected = DATA([self.cols.names])
         max = 1E30
@@ -210,7 +149,7 @@ class DATA:
 
         return best_data, rest_data
 
-    def many(t, n=None):
+    def many(self, t, n=None):
         if n is None:
             n = len(t)
         return [random.choice(t) for _ in range(n)]
@@ -227,7 +166,7 @@ class DATA:
                 if line: yield [self.coerce(x) for x in line.split(",")]
 
     def farapart(self,rows,sortp=None,a=None,b=None,far=None,evals=None):
-        far = len(rows) * Constants.the.far
+        far = int(len(rows) * Constants.the.far)
         evals = 1 if a else 2
         a = a if a else random.choice(rows).neighbors(self,rows)[far]
         b = a.neighbors(self,rows)[far]
@@ -236,26 +175,30 @@ class DATA:
         return a,b,a.dist(b,self),evals
 
     def half(self,rows=None,sortp=None,before=None,evals=None):
-        some = self.many(rows, min(Constants.the.half,len(rows)))
+        minHalf = min(Constants.the.half,len(rows))
+        some = self.many(rows, minHalf)
         a,b,C,evals = self.farapart(some, sortp, before)
+        # print("its here a ", a)
         def d(row1,row2):
             return row1.dist(row2,self)
         def project(r):
+            # print("its r ", r)
             return ((d(r,a)**2 + C**2 - d(r,b)**2) / (2*C))
-        a_s,b_s = {},{}
+        a_s,b_s = [],[]
         for n,row in enumerate(Utils.keysort(rows,project)):
             if n <= len(rows) // 2:
-                a_s[n] = row
+                a_s.append(row)
             else:
-                b_s[n] = row
-        return a_s, b_s, a, b, C, d(a, b_s[1]), evals
+                b_s.append(row)
+        return a_s, b_s, a, b, C, d(a, b_s[0]), evals
 
-    def tree(self, sortp=None, _tree=None, evals=None, evals1=None):
+    def tree(self, sortp=None):
         evals = 0
-        def _tree(data, above, lefts, rights, node):
+        def _tree(data, above=None):
+            nonlocal evals
             node = NODE(data)
             if len(data.rows) > 2*(len(self.rows)**0.5):
-                lefts, rights, node.left, node.right, node.C, node.cut, evals1 = self.half(data.rows, sortp, above)
+                lefts, rights, node.left, node.right, node.C, node.cut, evals1 = self.half(list(data.rows.values()), sortp, above)
                 evals = evals + evals1
                 node.lefts  = _tree(self.clone(lefts),  node.left)
                 node.rights = _tree(self.clone(rights), node.right)
@@ -263,16 +206,17 @@ class DATA:
         return _tree(self),evals
 
     def branch(self,stop=None,rest=None,_branch=None,evals=None):
-        evals, rest = 1, {}
+        evals, rest = 1, []
         if stop is None:
             stop = 2*(len(self.rows)**0.5)
-        def _branch(data, above, left, lefts, rights):
+        def _branch(data, above=None):
+            nonlocal evals, rest
             if len(data.rows) > stop:
-                lefts, rights, left = self.half(data.rows, true, above)
+                lefts, rights, left, _, _, _, _ = self.half(list(data.rows.values()), True, above)
                 evals = evals+1
-                for _,row1 in rights.items():
-                    rest[1+len(rest)] = row1
+                for row1 in rights:
+                    rest.append(row1)
                 return _branch(data.clone(lefts), left)
             else:
-                return self.clone(data.rows),self.clone(rest),evals
+                return self.clone(data.rows.values()),self.clone(rest),evals
         return _branch(self)

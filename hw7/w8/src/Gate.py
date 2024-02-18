@@ -19,7 +19,7 @@ OPTIONS:
   -T --Top    max. good cuts to explore   = 10
   -k --k      max. good cuts to explore   = 10
   -c --cohen    small effect size               = .35
-  -f --file    where to read data          = ./../data/auto93.csv
+  -f --file    where to read data          = hw6/w8/data/auto93.csv
   -h --help     show help                       = false
   -k --k        low class frequency kludge      = 1
   -m --m        low attribute frequency kludge  = 2
@@ -120,7 +120,7 @@ def _get_string(d):
     s = "{"
     for i in d.values():
         s += " " + str(i)
-    s += "}" 
+    s += "}"
 
     return s
 
