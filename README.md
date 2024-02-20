@@ -29,16 +29,16 @@ Group 18 ASE Spring 24
  - [Print 5](https://github.com/ymdatta/ASE_Spring24/blob/main/hw4/w4/src/5.out)
  - [Print 6](https://github.com/ymdatta/ASE_Spring24/blob/main/hw4/w4/src/6.out)
 
- ## HW Week 5
+ ## HW Week 5 (hw5/w5)
 
  ### Distance output
  - [Distance output](https://github.com/ymdatta/ASE_Spring24/blob/main/hw5/w5/src/dist.out)
-
-## HW Week 6
-
+ 
+ ## HW Week 7 (hw5/w7)
+ 
  ### Task 1 Output
- - [Cluster output](https://github.com/ymdatta/ASE_Spring24/blob/main/hw6/w7/src/task1.out)
-### Task 2 Output
- - [Optimization Single descent output](https://github.com/ymdatta/ASE_Spring24/blob/main/hw6/w7/src/task2.out)
+ - [Cluster output](https://github.com/ymdatta/ASE_Spring24/blob/main/hw5/w7/src/task1.out)
+ ### Task 2 Output
+ - [Optimization Single descent output](https://github.com/ymdatta/ASE_Spring24/blob/main/hw5/w7/src/task2.out)
  ### Task 3 Output
- - [Optimization Double tap output](https://github.com/ymdatta/ASE_Spring24/blob/main/hw6/w7/src/task3.out)
+ - [Optimization Double tap output](https://github.com/ymdatta/ASE_Spring24/blob/main/hw5/w7/src/task3.out)
