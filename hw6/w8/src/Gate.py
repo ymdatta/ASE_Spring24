@@ -160,11 +160,59 @@ def print_smo(d):
     some = 0.5
     d.gate_smo(budget0,budget,some)
 
+def slurp(file):
+  nums,lst,last= [],[],None
+  with open(file) as fp:
+    for word in [of(x) for s in fp.readlines() for x in s.split()]:
+      if isinstance(word,float):
+        lst += [word]
+      else:
+        if len(lst)>0: nums += [SAMPLE(lst,last)]
+        lst,last =[],word
+  if len(lst)>0: nums += [SAMPLE(lst,last)]
+  return nums
+
+def sk(nums):
+  def sk1(nums, rank,lvl=1):
+    all = lambda lst:  [x for num in lst for x in num.has]
+    b4, cut = SAMPLE(all(nums)) ,None
+    max =  -1
+    for i in range(1,len(nums)):
+      lhs = SAMPLE(all(nums[:i]));
+      rhs = SAMPLE(all(nums[i:]));
+      tmp = (lhs.n*abs(lhs.mid() - b4.mid()) + rhs.n*abs(rhs.mid() - b4.mid()))/b4.n
+      if tmp > max:
+         max,cut = tmp,i
+    if cut and different( all(nums[:cut]), all(nums[cut:])):
+      rank = sk1(nums[:cut], rank, lvl+1) + 1
+      rank = sk1(nums[cut:], rank, lvl+1)
+    else:
+      for num in nums: num.rank = rank
+    return rank
+  #------------
+  nums = sorted(nums, key=lambda num:num.mid())
+  sk1(nums,0)
+  return nums
+
+def print_bar(nums):
+  all = SAMPLE([x for num in nums for x in num.has])
+  last = None
+  for num in sk(nums):
+    if num.rank != last: print("#")
+    last=num.rank
+    print(all.bar(num,width=40,word="%20s", fmt="%5.2f"))
+
 d = DATA(Constants.the.file)
+#Part 1
 #print_stats(d)
-print("#")
-print_smo(d)
-print("#")
+#print("#")
+#print_smo(d)
+#print("#")
 #print_50(d)
-print("#")
+#print("#")
 #d.evaluate_all()
+
+#Part 2
+print_bar(slurp("input file"))
+#TODO create the input file with outputs of
+#base #bonr9 #rand9 #bonr15 #rand15 #bonr20 #rand20 #rand358
