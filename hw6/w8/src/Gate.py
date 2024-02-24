@@ -19,7 +19,7 @@ OPTIONS:
   -T --Top    max. good cuts to explore   = 10
   -k --k      max. good cuts to explore   = 10
   -c --cohen    small effect size               = .35
-  -f --file    where to read data          = hw6/w8/data/auto93.csv
+  -f --file    where to read data          = ../data/auto93.csv
   -h --help     show help                       = false
   -k --k        low class frequency kludge      = 1
   -m --m        low attribute frequency kludge  = 2
@@ -161,10 +161,10 @@ def print_smo(d):
     d.gate_smo(budget0,budget,some)
 
 d = DATA(Constants.the.file)
-print_stats(d)
+#print_stats(d)
 print("#")
 print_smo(d)
 print("#")
-print_50(d)
+#print_50(d)
 print("#")
-d.evaluate_all()
+#d.evaluate_all()

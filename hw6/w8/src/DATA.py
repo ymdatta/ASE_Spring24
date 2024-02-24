@@ -138,7 +138,7 @@ class DATA:
         bests = {}
         rows = list(self.rows.values())
         random_seeds = random.sample(range(100),20)
-        for i in range(5):
+        for i in range(20):
             Constants.the.seed = random_seeds[i]
             random.shuffle(rows)
 
