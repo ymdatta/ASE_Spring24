@@ -42,3 +42,8 @@ Group 18 ASE Spring 24
  - [Optimization Single descent output](https://github.com/ymdatta/ASE_Spring24/blob/main/hw5/w7/src/task2.out)
  ### Task 3 Output
  - [Optimization Double tap output](https://github.com/ymdatta/ASE_Spring24/blob/main/hw5/w7/src/task3.out)
+
+ ## HW Week 8
+
+ ### Part 1 Output
+ - [No Stats Output](https://github.com/ymdatta/ASE_Spring24/blob/main/hw6/w8/src/hw06-part1.out)
