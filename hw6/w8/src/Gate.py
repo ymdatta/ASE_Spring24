@@ -33,6 +33,7 @@ regular expressions,and exception handling,
 import re, ast
 from DATA import DATA
 from ROW import ROW
+from SAMPLE import SAMPLE
 import pdb
 import sys
 import Constants
@@ -154,6 +155,10 @@ def print_50(d):
 
         print("any50:\t",s)
 
+def of(s):
+   try: return float(s)
+   except ValueError: return s
+
 def print_smo(d):
     budget0 = 4
     budget = 5
@@ -204,15 +209,15 @@ def print_bar(nums):
 
 d = DATA(Constants.the.file)
 #Part 1
-#print_stats(d)
-#print("#")
-#print_smo(d)
-#print("#")
-#print_50(d)
-#print("#")
-#d.evaluate_all()
+print_stats(d)
+print("#")
+print_smo(d)
+print("#")
+print_50(d)
+print("#")
+d.evaluate_all()
 
 #Part 2
-print_bar(slurp("input file"))
+#print_bar(slurp("input file"))
 #TODO create the input file with outputs of
 #base #bonr9 #rand9 #bonr15 #rand15 #bonr20 #rand20 #rand358
