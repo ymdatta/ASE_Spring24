@@ -209,13 +209,17 @@ def print_bar(nums):
 
 d = DATA(Constants.the.file)
 #Part 1
-print_stats(d)
+'''print_stats(d)
 print("#")
 print_smo(d)
 print("#")
 print_50(d)
 print("#")
-d.evaluate_all()
+d.evaluate_all()'''
+
+d.randN(15)
+d.randN(20)
+#d.randN(358)
 
 #Part 2
 #print_bar(slurp("input file"))

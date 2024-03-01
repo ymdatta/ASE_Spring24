@@ -176,6 +176,20 @@ class DATA:
             s_temp += "\t"
         print("100%:\t",s_temp)
 
+    def randN(self, n=0):
+        rows = list(self.rows.values())
+        random.shuffle(rows)
+        rowsN = rows[:n]
+        rowsNd2h = [row.d2h(self) for row in rowsN]
+        rowsNd2h.sort()
+        s_temp = ""
+
+        for j in rowsNd2h:
+            s_temp += str(round(j,2))
+            s_temp += "\t"
+        print("N: ",n)
+        print("randN:\t",s_temp)
+
     def split(self,best,rest,lite,dark):
         selected = DATA([self.cols.names])
         max = 1E30
