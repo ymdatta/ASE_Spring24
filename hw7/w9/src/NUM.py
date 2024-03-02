@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
+import Constants
 import re
 
 class NUM:
@@ -90,3 +91,8 @@ class NUM:
         elif y=='?':
             y = 1 if x < 0.5 else 0
         return abs(x-y)
+
+    ## Discertization
+    def bin(self, x):
+        tmp = (self.hi - self.lo) / (Constants.the.bins - 1)
+        return 1 if self.hi == self.lo else int(x / tmp + 0.5) * tmp

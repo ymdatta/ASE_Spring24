@@ -1,0 +1,21 @@
+
+{at: 1, scored: 0, txt: 'Clndrs', x: {hi: 4, lo: -inf}, y: {HATE: 36, LIKE: 24}}
+{at: 1, scored: 0, txt: 'Clndrs', x: {hi: inf, lo: 4}, y: {HATE: 36}}
+
+{at: 2, scored: 0, txt: 'Volume', x: {hi: 90, lo: -inf}, y: {LIKE: 10, HATE: 7}}
+{at: 2, scored: 0, txt: 'Volume', x: {hi: 116, lo: 90}, y: {LIKE: 8, HATE: 13}}
+{at: 2, scored: 0, txt: 'Volume', x: {hi: 156, lo: 116}, y: {LIKE: 6, HATE: 16}}
+{at: 2, scored: 0, txt: 'Volume', x: {hi: inf, lo: 156}, y: {HATE: 36}}
+
+{at: 4, scored: 0, txt: 'Model', x: {hi: 73, lo: -inf}, y: {HATE: 22}}
+{at: 4, scored: 0, txt: 'Model', x: {hi: 74, lo: 73}, y: {LIKE: 2, HATE: 7}}
+{at: 4, scored: 0, txt: 'Model', x: {hi: 75, lo: 74}, y: {LIKE: 6, HATE: 3}}
+{at: 4, scored: 0, txt: 'Model', x: {hi: 76, lo: 75}, y: {LIKE: 7, HATE: 4}}
+{at: 4, scored: 0, txt: 'Model', x: {hi: 77, lo: 76}, y: {LIKE: 4, HATE: 6}}
+{at: 4, scored: 0, txt: 'Model', x: {hi: 79, lo: 77}, y: {LIKE: 4, HATE: 9}}
+{at: 4, scored: 0, txt: 'Model', x: {hi: 81, lo: 79}, y: {LIKE: 1, HATE: 12}}
+{at: 4, scored: 0, txt: 'Model', x: {hi: inf, lo: 81}, y: {HATE: 9}}
+
+{at: 5, scored: 0, txt: 'origin', x: {hi: 1, lo: 1}, y: {HATE: 52}}
+{at: 5, scored: 0, txt: 'origin', x: {hi: 2, lo: 2}, y: {LIKE: 24, HATE: 7}}
+{at: 5, scored: 0, txt: 'origin', x: {hi: 3, lo: 3}, y: {HATE: 13}}

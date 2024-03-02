@@ -8,10 +8,10 @@ OPTIONS:
   -B --Beam   max number of ranges        = 10
   -c --cohen  parametric small delta      = .35
   -C --Cliffs  non-parametric small delta = 0.2385
-  -F --Far    distance to  distant rows   = .925
+  -F --far    distance to  distant rows   = .92
   -g --go     start up action             = "help"
   -h --help   show help                   = False
-  -H --Halves #examples used in halving   = 512
+  -H --half   #items to use in clustering     = 256
   -p --p      distance coefficient        = 2
   -s --seed   random number seed          = 1234567891
   -m --min    minimum size               = .5
@@ -19,7 +19,7 @@ OPTIONS:
   -T --Top    max. good cuts to explore   = 10
   -k --k      max. good cuts to explore   = 10
   -c --cohen    small effect size               = .35
-  -f --file    where to read data          = ../data/auto93.csv
+  -f --file    where to read data          =  ../data/auto93.csv
   -h --help     show help                       = false
   -k --k        low class frequency kludge      = 1
   -m --m        low attribute frequency kludge  = 2
@@ -38,7 +38,7 @@ from SAMPLE import SAMPLE
 import pdb
 import sys
 import Constants
-import RANGE
+from RANGE import RANGE
 import random
 import math
 
@@ -113,8 +113,9 @@ Constants.the = SLOTS(**{m[1]:coerce(m[2]) for m in re.finditer( r"--(\w+)[^=]*=
 #setDocValue()
 #UpdateCLAValues()
 
-def _mergeds(self, ranges, too_few, i=1, a=None, t=None, both=None):
+def _mergeds(ranges, too_few):
     t = []
+    i=1
     while i <= len(ranges):
         a = ranges[i - 1]
         if i < len(ranges):
@@ -125,11 +126,11 @@ def _mergeds(self, ranges, too_few, i=1, a=None, t=None, both=None):
         t.append(a)
         i += 1
     if len(t) < len(ranges):
-        return self._mergeds(t, too_few)
+        return _mergeds(t, too_few)
     for i in range(1, len(t)):
-        t[i].x.lo = t[i - 1].x.hi
-    t[0].x.lo = -math.inf
-    t[-1].x.hi = math.inf
+        t[i].x['lo'] = t[i - 1].x['hi']
+    t[0].x['lo'] = -math.inf
+    t[-1].x['hi'] = math.inf
     return t
 
 def _ranges1(col, rowss):
@@ -137,37 +138,40 @@ def _ranges1(col, rowss):
     nrows = 0
     for y, rows in rowss.items():
         nrows += len(rows)
-        for row in rows:
+        for row in list(rows):
             x = row.cells[col.at]
             if x != "?":
                 bin = col.bin(x)
                 if bin not in out:
-                    out[bin] = RANGE.new(col.at, col.txt, x)
+                    out[bin] = RANGE(col.at, col.txt, x)
                 out[bin].add(x, y)
-    out = out.values()
-    out.sort(key=lambda a: a.x.lo)
-    return out if col.has else _mergeds(out, nrows / Constants.the.bins)
+    out = list(out.values())
+    out.sort(key=lambda a: a.x['lo'])
+    return out if hasattr(col, 'has') else _mergeds(out, nrows / Constants.the.bins)
 
 def bins():
     d = DATA(Constants.the.file)
-    best, rest = d.branch()
-    LIKE = best.rows
-    HATE = random.sample(rest.rows, min(3 * len(LIKE), len(rest.rows)))
+    best, rest, _ = d.branch()
+    LIKE = list(best.rows.values())
+    # HATE = random.sample(rest.rows, min(3 * len(LIKE), len(rest.rows)))
+    HATE = random.sample(list(rest.rows.values()), min(3 * len(LIKE), len(rest.rows)))
 
     def score(range_):
         return range_.score("LIKE", len(LIKE), len(HATE))
 
     t = []
-    for col in d.cols.x:
+    for col in list(d.cols.x.values()):
         print("")
         for range_ in _ranges1(col, {"LIKE": LIKE, "HATE": HATE}):
             print(range_)
             t.append(range_)
 
-    t.sort(key=lambda a: score(a), reverse=True)
-    max_score = score(t[0])
-    print("\n#scores:\n")
-    for v in t[:Constants.the.Beam]:
-        if score(v) > max_score * 0.1:
-            print(round(score(v)), v)
-    print({"LIKE": len(LIKE), "HATE": len(HATE)})
+    # t.sort(key=lambda a: score(a), reverse=True)
+    # max_score = score(t[0])
+    # print("\n#scores:\n")
+    # for v in t[:Constants.the.Beam]:
+    #     if score(v) > max_score * 0.1:
+    #         print("{:.2f}".format(round(score(v), 2)), v)
+    # print({"LIKE": len(LIKE), "HATE": len(HATE)})
+
+bins()

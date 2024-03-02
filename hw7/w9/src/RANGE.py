@@ -1,13 +1,17 @@
 import math
 import Constants
 
-class Range:
+class RANGE:
     def __init__(self, at, txt, lo, hi=None):
         self.at = at
         self.txt = txt
         self.scored = 0
         self.x = {'lo': lo, 'hi': hi or lo}
         self.y = {}
+    def __str__(self):
+        return "{{at: {}, scored: {}, txt: '{}', x: {{hi: {}, lo: {}}}, y: {{{}}}}}".format(
+            self.at, self.scored, self.txt, self.x['hi'], self.x['lo'],
+            ', '.join('{}: {}'.format(k, v) for k, v in self.y.items()))
 
     def add(self, x, y):
         self.x['lo'] = min(self.x['lo'], x)
@@ -29,7 +33,7 @@ class Range:
         return self._score(self.y, goal, LIKE, HATE)
 
     def merge(self, other):
-        both = Range(self.at, self.txt, self.x['lo'])
+        both = RANGE(self.at, self.txt, self.x['lo'])
         both.x['lo'] = min(self.x['lo'], other.x['lo'])
         both.x['hi'] = max(self.x['hi'], other.x['hi'])
         for t in [self.y, other.y]:

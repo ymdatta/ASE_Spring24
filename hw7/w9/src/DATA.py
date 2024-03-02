@@ -210,7 +210,7 @@ class DATA:
 
         return best_data, rest_data
 
-    def many(t, n=None):
+    def many(self, t, n=None):
         if n is None:
             n = len(t)
         return [random.choice(t) for _ in range(n)]
@@ -227,7 +227,7 @@ class DATA:
                 if line: yield [self.coerce(x) for x in line.split(",")]
 
     def farapart(self,rows,sortp=None,a=None,b=None,far=None,evals=None):
-        far = len(rows) * Constants.the.far
+        far = int(len(rows) * Constants.the.far)
         evals = 1 if a else 2
         a = a if a else random.choice(rows).neighbors(self,rows)[far]
         b = a.neighbors(self,rows)[far]
@@ -242,17 +242,17 @@ class DATA:
             return row1.dist(row2,self)
         def project(r):
             return ((d(r,a)**2 + C**2 - d(r,b)**2) / (2*C))
-        a_s,b_s = {},{}
-        for n,row in enumerate(Utils.keysort(rows,project)):
+        a_s,b_s = [],[]
+        for n,row in enumerate(Utils.keysort(rows,project), start=1):
             if n <= len(rows) // 2:
-                a_s[n] = row
+                a_s.append(row)
             else:
-                b_s[n] = row
-        return a_s, b_s, a, b, C, d(a, b_s[1]), evals
+                b_s.append(row)
+        return a_s, b_s, a, b, C, d(a, b_s[0]), evals
 
-    def tree(self, sortp=None, _tree=None, evals=None, evals1=None):
+    def tree(self, sortp=None):
         evals = 0
-        def _tree(data, above, lefts, rights, node):
+        def _tree(data, above=None):
             node = NODE(data)
             if len(data.rows) > 2*(len(self.rows)**0.5):
                 lefts, rights, node.left, node.right, node.C, node.cut, evals1 = self.half(data.rows, sortp, above)
@@ -263,16 +263,17 @@ class DATA:
         return _tree(self),evals
 
     def branch(self,stop=None,rest=None,_branch=None,evals=None):
-        evals, rest = 1, {}
+        evals, rest = 1, []
         if stop is None:
             stop = 2*(len(self.rows)**0.5)
-        def _branch(data, above, left, lefts, rights):
+        def _branch(data, above=None):
+            nonlocal evals, rest
             if len(data.rows) > stop:
-                lefts, rights, left = self.half(data.rows, True, above)
+                lefts, rights, left, _, _, _, _ = self.half(list(data.rows.values()), True, above)
                 evals = evals+1
-                for _,row1 in rights.items():
-                    rest[1+len(rest)] = row1
+                for row1 in rights:
+                    rest.append(row1)
                 return _branch(data.clone(lefts), left)
             else:
-                return self.clone(data.rows),self.clone(rest),evals
+                return self.clone(list(data.rows.values())), self.clone(rest), evals
         return _branch(self)

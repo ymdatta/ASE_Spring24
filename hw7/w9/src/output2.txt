@@ -1,0 +1,10 @@
+#scores:
+
+0.89 {at: 5, scored: 0, txt: 'origin', x: {hi: 3, lo: 3}, y: {LIKE: 24, HATE: 9}}
+0.64 {at: 1, scored: 0, txt: 'Clndrs', x: {hi: 4, lo: -inf}, y: {LIKE: 23, HATE: 34}}
+0.45 {at: 2, scored: 0, txt: 'Volume', x: {hi: 90, lo: -inf}, y: {LIKE: 12, HATE: 4}}
+0.25 {at: 4, scored: 0, txt: 'Model', x: {hi: 78, lo: 77}, y: {LIKE: 8, HATE: 8}}
+0.22 {at: 4, scored: 0, txt: 'Model', x: {hi: 77, lo: 76}, y: {LIKE: 6, HATE: 2}}
+0.18 {at: 2, scored: 0, txt: 'Volume', x: {hi: 116, lo: 90}, y: {LIKE: 7, HATE: 13}}
+0.15 {at: 4, scored: 0, txt: 'Model', x: {hi: inf, lo: 79}, y: {LIKE: 6, HATE: 13}}
+{'LIKE': 24, 'HATE': 72}
