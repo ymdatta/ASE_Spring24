@@ -5,6 +5,7 @@ import pdb
 import re, ast, fileinput, random, copy
 import Constants
 import Utils
+import statistics
 
 class DATA:
     def _ltod(self, a):
@@ -180,15 +181,21 @@ class DATA:
         rows = list(self.rows.values())
         random.shuffle(rows)
         rowsN = rows[:n]
-        rowsNd2h = [row.d2h(self) for row in rowsN]
+        rowsNd2h = [round(row.d2h(self), 2) for row in rowsN]
         rowsNd2h.sort()
-        s_temp = ""
+        return rowsNd2h[0]
 
-        for j in rowsNd2h:
-            s_temp += str(round(j,2))
-            s_temp += "\t"
-        print("N: ",n)
-        print("randN:\t",s_temp)
+    def getBest(self):
+        rows = list(self.rows.values())
+        rowsd2h = [round(row.d2h(self), 2) for row in rows]
+        rowsd2h.sort()
+        return rowsd2h[0]
+
+    def getBase(self):
+        rows = list(self.rows.values())
+        rowsd2h = [round(row.d2h(self), 2) for row in rows]
+        rowsd2h.sort()
+        return statistics.median(rowsd2h)
 
     def split(self,best,rest,lite,dark):
         selected = DATA([self.cols.names])

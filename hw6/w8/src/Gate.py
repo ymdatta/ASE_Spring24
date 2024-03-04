@@ -209,17 +209,40 @@ def print_bar(nums):
 
 d = DATA(Constants.the.file)
 #Part 1
-'''print_stats(d)
+print_stats(d)
 print("#")
 print_smo(d)
 print("#")
 print_50(d)
 print("#")
-d.evaluate_all()'''
+#d.evaluate_all()
 
-d.randN(15)
-d.randN(20)
+#d.randN(15)
+#d.randN(20)
 #d.randN(358)
+
+print("rand20: ")
+for i in range(0, 20):
+   print(d.randN(20), "  ", end='')
+print()
+
+print("rand15: ")
+for i in range(0, 20):
+   print(d.randN(15), "  ", end='')
+print()
+
+print("rand358: ")
+for i in range(0, 20):
+   print(d.randN(358), "  ", end='')
+print()
+
+print("rand9: ")
+for i in range(0, 20):
+   print(d.randN(9), "  ", end='')
+print()
+
+print("Best is: ", d.getBest())
+print("Base is: ", d.getBase())
 
 #Part 2
 #print_bar(slurp("input file"))

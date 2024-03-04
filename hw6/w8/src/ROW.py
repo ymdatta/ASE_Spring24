@@ -21,7 +21,6 @@ class ROW:
             n += 1
             d += pow(abs(col.heaven - col.norm(self.cells[k])), 2)
 
-        print(pow(d, 0.5) / pow(n, 0.5))
         return pow(d, 0.5) / pow(n, 0.5)
 
     # Distance to best values (and _lower_ is _better_).
