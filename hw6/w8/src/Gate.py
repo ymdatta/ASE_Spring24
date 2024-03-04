@@ -208,6 +208,7 @@ def print_bar(nums):
     print(all.bar(num,width=40,word="%20s", fmt="%5.2f"))
 
 d = DATA(Constants.the.file)
+'''
 #Part 1
 print_stats(d)
 print("#")
@@ -248,3 +249,5 @@ print("Base is: ", d.getBase())
 #print_bar(slurp("input file"))
 #TODO create the input file with outputs of
 #base #bonr9 #rand9 #bonr15 #rand15 #bonr20 #rand20 #rand358
+'''
+d.bonrN(4,9,0.5)

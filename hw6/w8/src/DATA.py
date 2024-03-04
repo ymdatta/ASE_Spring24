@@ -185,6 +185,28 @@ class DATA:
         rowsNd2h.sort()
         return rowsNd2h[0]
 
+    #budget = n, budget0 = peek
+    #bonr9 : budget0 = 4, budget = 9
+    #bonr20 : budget0 = 4, budget = 20
+    def bonrN(self, budget0, budget, some=0.5):
+        print("bonr ",budget)
+        rows = list(self.rows.values())
+        random_seeds = random.sample(range(100),20)
+        s_temp = ""
+        for i in range(20):
+            Constants.the.seed = random_seeds[i]
+            random.shuffle(rows)
+            lite = rows[0: budget0]
+            dark = rows[budget0:]
+            x_ind = self._get_x()
+            for i in range(budget):
+                best, rest = self.bestRest(lite, budget0 ** some)
+                todo, selected, max = self.split(best, rest, lite, dark)
+            best_row_d2h = best.rows[1].d2h(self)
+            s_temp += str(round(best_row_d2h, 2))
+            s_temp += "\t"
+        print(s_temp)
+
     def getBest(self):
         rows = list(self.rows.values())
         rowsd2h = [round(row.d2h(self), 2) for row in rows]
@@ -199,7 +221,7 @@ class DATA:
 
     def split(self,best,rest,lite,dark):
         selected = DATA([self.cols.names])
-        max = 1E30
+        max = 1E-300
         out = 0
         for i,row in enumerate(dark):
             b = row.like(best,len(lite),2)
@@ -209,7 +231,8 @@ class DATA:
             temp = abs(b+r) / abs(b-r+1E-300)
             if temp > max:
                 out,max = i,temp
-        return out,selected, max
+
+        return out,selected,max
 
     def bestRest(self, rows, want):
         # Sort rows based on distance to heaven
