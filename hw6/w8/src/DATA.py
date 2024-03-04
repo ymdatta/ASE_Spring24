@@ -188,7 +188,7 @@ class DATA:
     #budget = n, budget0 = peek
     #bonr9 : budget0 = 4, budget = 9
     #bonr20 : budget0 = 4, budget = 20
-    def bonrN(self, budget0, budget, some=0.5):
+    def bonrN(self, budget0=4, budget, some=0.5):
         print("bonr ",budget)
         rows = list(self.rows.values())
         random_seeds = random.sample(range(100),20)
