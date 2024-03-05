@@ -250,4 +250,39 @@ print("Base is: ", d.getBase())
 #TODO create the input file with outputs of
 #base #bonr9 #rand9 #bonr15 #rand15 #bonr20 #rand20 #rand358
 '''
-d.bonrN(9,4,0.5)
+# part 2
+print("rand20: ")
+for i in range(0, 20):
+   print(d.randN(20), "  ", end='')
+print()
+
+print("rand15: ")
+for i in range(0, 20):
+   print(d.randN(15), "  ", end='')
+print()
+
+print("rand358: ")
+for i in range(0, 20):
+   print(d.randN(358), "  ", end='')
+print()
+
+print("rand9: ")
+for i in range(0, 20):
+   print(d.randN(9), "  ", end='')
+print()
+
+print("Best is: ", d.getBest())
+for i in range(0, 20):
+  print(d.getBase(), "  ", end='')
+
+print("\nbonr9")
+for i in range(0, 20):
+  print(d.bonrN(9,4,0.5), "  ", end='')
+
+print("\nbonr15")
+for i in range(0, 20):
+  print(d.bonrN(15,4,0.5), "  ", end='')
+
+print("\nbonr20")
+for i in range(0, 20):
+  print(d.bonrN(20,4,0.5), "  ", end='')

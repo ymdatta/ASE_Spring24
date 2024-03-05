@@ -153,7 +153,7 @@ class DATA:
 
                 stats[i] = selected.mid()
                 bests[i] = best.rows[1]
-                lite[todo] = dark.pop(todo)
+                lite.append(dark.pop(todo))
 
                 s_temp = ""
                 for j in x_ind:
@@ -189,27 +189,29 @@ class DATA:
     #bonr9 : budget0 = 4, budget = 9
     #bonr20 : budget0 = 4, budget = 20
     def bonrN(self, budget, budget0=4, some=0.5):
-        print("bonr ",budget)
-        bests = {}
+        bests = []
+        stats = []
         rows = list(self.rows.values())
-        random_seeds = random.sample(range(100),20)
-        s_temp = ""
-        for i in range(20):
-            Constants.the.seed = random_seeds[i]
-            random.shuffle(rows)
-            lite = rows[0: budget0]
-            dark = rows[budget0:]
-            x_ind = self._get_x()
-            for i in range(budget):
-                best, rest = self.bestRest(lite, budget0 ** some)
-                todo, selected, max = self.split(best, rest, lite, dark)
-                lite[todo] = dark.pop(todo)
-                bests[i] = best.rows[1]
-            best_row_d2h = best.rows[1].d2h(self)
-            #print(round(best_row_d2h, 2))
-            s_temp += str(round(best_row_d2h, 2))
-            s_temp += "\t"
-        print(s_temp)
+        random.shuffle(rows)
+
+        lite = rows[:budget0]
+        dark = rows[budget0:]
+
+        for i in range(budget):
+            best, rest = self.bestRest(lite, len(lite) ** some)
+            todo, selected, max = self.split(best, rest, lite, dark)
+            stats.append(selected.mid())
+            bests.append(list(best.rows.values())[0])
+            lite.append(dark.pop(todo))
+
+        d2h_l = []
+        for row in bests:
+            d2h_l.append(round(row.d2h(self), 2))
+
+        d2h_l.sort()
+        return d2h_l[0]
+
+
 
     def getBest(self):
         rows = list(self.rows.values())
