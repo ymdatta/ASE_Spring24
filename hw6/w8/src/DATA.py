@@ -188,8 +188,9 @@ class DATA:
     #budget = n, budget0 = peek
     #bonr9 : budget0 = 4, budget = 9
     #bonr20 : budget0 = 4, budget = 20
-    def bonrN(self, budget0=4, budget, some=0.5):
+    def bonrN(self, budget, budget0=4, some=0.5):
         print("bonr ",budget)
+        bests = {}
         rows = list(self.rows.values())
         random_seeds = random.sample(range(100),20)
         s_temp = ""
@@ -202,7 +203,10 @@ class DATA:
             for i in range(budget):
                 best, rest = self.bestRest(lite, budget0 ** some)
                 todo, selected, max = self.split(best, rest, lite, dark)
+                lite[todo] = dark.pop(todo)
+                bests[i] = best.rows[1]
             best_row_d2h = best.rows[1].d2h(self)
+            #print(round(best_row_d2h, 2))
             s_temp += str(round(best_row_d2h, 2))
             s_temp += "\t"
         print(s_temp)
@@ -221,7 +225,7 @@ class DATA:
 
     def split(self,best,rest,lite,dark):
         selected = DATA([self.cols.names])
-        max = 1E-300
+        max = 1E30
         out = 0
         for i,row in enumerate(dark):
             b = row.like(best,len(lite),2)

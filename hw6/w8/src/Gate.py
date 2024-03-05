@@ -250,4 +250,4 @@ print("Base is: ", d.getBase())
 #TODO create the input file with outputs of
 #base #bonr9 #rand9 #bonr15 #rand15 #bonr20 #rand20 #rand358
 '''
-d.bonrN(4,9,0.5)
+d.bonrN(9,4,0.5)
