@@ -48,6 +48,10 @@ Group 18 ASE Spring 24
  ### Part 1 Output
  - [No Stats Output](https://github.com/ymdatta/ASE_Spring24/blob/main/hw6/w8/src/hw06-part1.out)
 
+ ### Part 2 Output
+
+ - [With Stats Output](https://github.com/ymdatta/ASE_Spring24/blob/main/hw6/w8/src/hw6-part2-out.txt)
+
  ## HW Week 8 (hw7)
 
  ### Output1
