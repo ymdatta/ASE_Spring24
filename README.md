@@ -52,7 +52,7 @@ Group 18 ASE Spring 24
 
  - [With Stats Output](https://github.com/ymdatta/ASE_Spring24/blob/main/hw6/w8/src/hw6-part2-out.txt)
 
- ## HW Week 9 (hw8)
+ ## HW Week 9 (hw7)
 
  ### Output1
  - [Merge Rules](https://github.com/ymdatta/ASE_Spring24/blob/main/hw7/w9/src/output1.txt)
