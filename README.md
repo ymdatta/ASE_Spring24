@@ -58,3 +58,6 @@ Group 18 ASE Spring 24
  - [Merge Rules](https://github.com/ymdatta/ASE_Spring24/blob/main/hw7/w9/src/output1.txt)
  ### Output2
  - [Pruning Ranges](https://github.com/ymdatta/ASE_Spring24/blob/main/hw7/w9/src/output2.txt)
+
+ ### Final HW (hw8)
+ - [Rules](https://github.com/ymdatta/ASE_Spring24/blob/main/hw8/w9/src/hw8.out)
