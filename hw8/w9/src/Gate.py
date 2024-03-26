@@ -215,4 +215,4 @@ for i, rule in enumerate(RULES(_ranges(training_data.cols.x.values(), rowss), "L
     result = training_data.clone(rule.selects(testing_data.rows.values()))
     if len(result.rows) > 0:
         result.rows = dict(sorted(result.rows.items(), key=lambda row: row[1].d2h(d)))
-        print(round(rule.scored), "\t", o(result.mid().cells), "\t", rule.show())
+        print(round(rule.scored,2), "\t", o(result.mid().cells), "\t", rule.show())
