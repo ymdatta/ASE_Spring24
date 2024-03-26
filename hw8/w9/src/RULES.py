@@ -1,8 +1,9 @@
 import Constants
+from RULE import RULE
 class RULES:
     def __init__(self, ranges, goal, rowss):
-        for k, v in rowss.items():
-            print(k, len(v))
+        #for k, v in rowss.items():
+            #print(k, len(v))
 
         self.goal = goal
         self.rowss = rowss
@@ -11,6 +12,13 @@ class RULES:
         self.likeHate()
 
         self.sorted = self.top(self.tryy(self.top(ranges)))
+
+    def powerset(self, s):
+        t = [[]]
+        for i in range(len(s)):
+            for j in range(len(t)):
+                t.append([s[i]] + t[j])
+        return t
 
     def likeHate(self):
         for y, rows in self.rowss.items():
@@ -34,10 +42,15 @@ class RULES:
 
     def tryy(self, ranges):
         u = []
-        for subset in powerset(ranges):
+        for subset in self.powerset(ranges):
             if len(subset) > 0:
                 rule = RULE(subset)
-                rule.scored = self.score(rule.selectss(self.rowss))
+                preds = rule.selectss(self.rowss)
+                if preds['LIKE']==0 and preds['HATE']==0:
+                    rule.scored = 0
+                else:
+                    rule.scored = self.score(preds)
+
                 if rule.scored > 0.01:
                     u.append(rule)
         return u
@@ -46,6 +59,6 @@ class RULES:
         t.sort(key=lambda x: x.scored, reverse=True)
         u = []
         for x in t:
-            if x.scored > t[0].scored * Constants.the.Cut:
+            if x.scored >= t[0].scored * 0.1:
                 u.append(x)
         return u[:Constants.the.Beam]

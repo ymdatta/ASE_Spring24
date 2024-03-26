@@ -159,9 +159,9 @@ def bins():
 
     t = []
     for col in list(d.cols.x.values()):
-        print("")
+        #print("")
         for range_ in _ranges1(col, {"LIKE": LIKE, "HATE": HATE}):
-            print(range_)
+            #print(range_)
             t.append(range_)
 
 def _ranges(cols, rowss):
@@ -171,18 +171,33 @@ def _ranges(cols, rowss):
             t.append(range)
     return t
 
+def o(t, n=None, u=None):
+    if isinstance(t, (int, float)):
+        return str(round(t, n))
+    if not isinstance(t, dict):
+        return str(t)
+
+    u = []
+    for k, v in t.items():
+        if str(k)[0] != "_":
+            if len(t) > 0:
+                u.append(o(v, n))
+            else:
+                u.append(f"%s: %s", o(k, n), o(v, n))
+
+    return "{" + ", ".join(u) + "}"
+
 ##final hw
 print("score\tmid selected\t\t\t\trule")
-print("_____\t____________________________________________\t____")
+print("_____\t___________________________________\t____")
 
 d = DATA(Constants.the.file)
 data_rows = d.rows
 size = len(data_rows)//2
 r = list(data_rows.values())
-#random.shuffle(r)
+random.shuffle(r)
 training_data = d.clone(r[:size])
 testing_data = d.clone(r[size:])
-print(training_data)
 
 best1, rest1, evals1 = training_data.branch(Constants.the.cut1)
 best2, rest2, evals2 = best1.branch(Constants.the.cut2)
@@ -196,8 +211,8 @@ rowss = {'LIKE':LIKE, 'HATE':HATE}
 rows_list = list(testing_data.rows.values())
 rowsss = testing_data.clone(rows_list[:int(evals1 + evals2 + 4 - 1)])
 
-for i, rule in enumerate(RULES(_ranges(training_data.cols.x, rowss), "LIKE", rowss).sorted):
-    result = training_data.clone(rule.selects(testing_data.rows))
+for i, rule in enumerate(RULES(_ranges(training_data.cols.x.values(), rowss), "LIKE", rowss).sorted):
+    result = training_data.clone(rule.selects(testing_data.rows.values()))
     if len(result.rows) > 0:
-        result.rows.sort(key=lambda row: row.d2h(d))
+        result.rows = dict(sorted(result.rows.items(), key=lambda row: row[1].d2h(d)))
         print(round(rule.scored), "\t", o(result.mid().cells), "\t", rule.show())

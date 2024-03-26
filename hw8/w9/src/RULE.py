@@ -11,15 +11,15 @@ def copy(t):
 def _showLess(t, ready=False):
     if not ready:
         t = copy(t)
-        t.sort(key=lambda p: p.x.lo)
+        t.sort(key=lambda p: p.x['lo'])
     i, u = 0, []
-    while i <= len(t):
+    while i < len(t)-1:
         a = t[i]
         if i < len(t):
-            if a.x.hi == t[i+1].x.lo:
+            if a.x['hi'] == t[i+1].x['lo']:
                 a = a.merge(t[i+1])
                 i += 1
-        i.append(a)
+        u.append(a)
         i += 1
     return t if len(u) == len(t) else _showLess(u, ready=True)
 
@@ -36,13 +36,13 @@ class RULE:
         if x == '?':
             return True
         for range in ranges:
-            lo, hi = range.x.lo, range.x.hi
+            lo, hi = range.x['lo'], range.x['hi']
             if (lo == hi and lo == x) or (lo <= x and x < hi):
                 return True
         return False
 
     def _and(self, row):
-        for ranges in self.parts:
+        for ranges in self.parts.values():
             if not self._or(ranges, row):
                 return False
         return True
@@ -55,14 +55,14 @@ class RULE:
         return t
 
     def selectss(self, rowss):
-        t = []
+        t = {}
         for y, rows in rowss.items():
             t[y] = len(self.selects(rows))
         return t
 
     def show(self):
         ands = []
-        for ranges in self.parts:
+        for ranges in self.parts.values():
             ors = _showLess(ranges)
             for i, range in enumerate(ors):
                 ors[i] = range.show()
