@@ -41,7 +41,8 @@ import Constants
 from RANGE import RANGE
 import random
 import math
-
+from RULE import RULE
+from RULES import RULES
 
 def coerce(x):
    try : return ast.literal_eval(x)
@@ -110,9 +111,6 @@ class SLOTS(dict):
 
 Constants.the = SLOTS(**{m[1]:coerce(m[2]) for m in re.finditer( r"--(\w+)[^=]*=\s*(\S+)",__doc__)})
 
-#setDocValue()
-#UpdateCLAValues()
-
 def _mergeds(ranges, too_few):
     t = []
     i=1
@@ -166,12 +164,40 @@ def bins():
             print(range_)
             t.append(range_)
 
-    # t.sort(key=lambda a: score(a), reverse=True)
-    # max_score = score(t[0])
-    # print("\n#scores:\n")
-    # for v in t[:Constants.the.Beam]:
-    #     if score(v) > max_score * 0.1:
-    #         print("{:.2f}".format(round(score(v), 2)), v)
-    # print({"LIKE": len(LIKE), "HATE": len(HATE)})
+def _ranges(cols, rowss):
+    t = []
+    for col in cols:
+        for range in _ranges1(col, rowss):
+            t.append(range)
+    return t
 
-bins()
+##final hw
+print("score\tmid selected\t\t\t\trule")
+print("_____\t____________________________________________\t____")
+
+d = DATA(Constants.the.file)
+data_rows = d.rows
+size = len(data_rows)//2
+r = list(data_rows.values())
+#random.shuffle(r)
+training_data = d.clone(r[:size])
+testing_data = d.clone(r[size:])
+print(training_data)
+
+best1, rest1, evals1 = training_data.branch(Constants.the.cut1)
+best2, rest2, evals2 = best1.branch(Constants.the.cut2)
+
+#random.shuffle(rest1.rows)
+LIKE = list(best2.rows.values())
+HATE = list(rest1.rows.values())[:3 * len(LIKE)]
+rowss = {'LIKE':LIKE, 'HATE':HATE}
+
+#random.shuffle(testing_data.rows)
+rows_list = list(testing_data.rows.values())
+rowsss = testing_data.clone(rows_list[:int(evals1 + evals2 + 4 - 1)])
+
+for i, rule in enumerate(RULES(_ranges(training_data.cols.x, rowss), "LIKE", rowss).sorted):
+    result = training_data.clone(rule.selects(testing_data.rows))
+    if len(result.rows) > 0:
+        result.rows.sort(key=lambda row: row.d2h(d))
+        print(round(rule.scored), "\t", o(result.mid().cells), "\t", rule.show())

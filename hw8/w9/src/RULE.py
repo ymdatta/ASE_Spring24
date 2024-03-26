@@ -57,7 +57,7 @@ class RULE:
     def selectss(self, rowss):
         t = []
         for y, rows in rowss.items():
-            t[y] = len(self.selects(rows)
+            t[y] = len(self.selects(rows))
         return t
 
     def show(self):

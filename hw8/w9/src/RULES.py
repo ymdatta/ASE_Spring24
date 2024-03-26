@@ -10,7 +10,7 @@ class RULES:
         self.HATE = 0
         self.likeHate()
 
-        self.sorted = self.top(self.try(self.top(ranges)))
+        self.sorted = self.top(self.tryy(self.top(ranges)))
 
     def likeHate(self):
         for y, rows in self.rowss.items():
