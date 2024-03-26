@@ -13,12 +13,13 @@ def _showLess(t, ready=False):
         t = copy(t)
         t.sort(key=lambda p: p.x['lo'])
     i, u = 0, []
-    while i < len(t)-1:
+    while i < len(t):
         a = t[i]
-        if i < len(t):
+        if i < len(t)-1:
             if a.x['hi'] == t[i+1].x['lo']:
                 a = a.merge(t[i+1])
                 i += 1
+        #print(a)
         u.append(a)
         i += 1
     return t if len(u) == len(t) else _showLess(u, ready=True)
